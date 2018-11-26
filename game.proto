@@ -1,0 +1,9 @@
+/**
+ * @file game.proto
+ * Define message format for representing one game
+ */
+
+syntax = "proto3";
+package proto;
+
+// TODO: Add definitions
