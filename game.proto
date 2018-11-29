@@ -7,3 +7,137 @@ syntax = "proto3";
 package proto;
 
 // TODO: Add definitions
+
+enum SoldierState {
+    IDLE = 0;
+    MOVE = 1;
+    ATTACK = 2;
+    DEAD = 3;
+};
+
+enum VillagerState {
+    IDLE = 0;
+    MOVE = 1;
+    ATTACK = 2;
+    MINE = 3;
+    BUILD = 4;
+    DEAD = 5;
+};
+
+enum FactoryState {
+    UNBUILT = 0;
+    IDLE = 1;
+    VILLAGER_PRODUCTION = 2;
+    SOLDIER_PRODUCTION = 3;
+    DESTROYED = 4;
+};
+
+enum TerrainType {
+    LAND = 0;
+    WATER = 1;
+    GOLD_MINE = 2;
+};
+
+message Soldier {
+    int32 id = 1;
+    int32 player_id = 2;
+    int32 hp = 3;
+    int32 x = 4;
+    int32 y = 5;
+    SoldierState state = 6;
+    int32 attack_target_x = 7;
+    int32 attack_target_y = 8;
+}
+
+message Villager {
+    int32 id = 1;
+    int32 player_id = 2; // Is this essential?
+    int32 hp = 3;
+    int32 x = 4;
+    int32 y = 5;
+    VillagerState state = 6;
+    int32 attack_target_x = 7; //
+    int32 attack_target_y = 8; // Set to -1 if not attacking
+    int32 build_target_x = 9; //
+    int32 build_target_y = 10; // Set to -1 if not building
+}
+
+message Factory {
+    int32 id = 1;
+    int32 player_id = 2;
+    int32 hp = 3;
+    int32 x = 4;
+    int32 y = 5;
+    FactoryState state = 6;
+    int32 build_percent = 7;
+}
+
+message MapElement {
+    TerrainType type = 1;
+}
+
+message PlayerError {
+    repeated int32 errors = 1;
+}
+
+message GameState {
+    repeated Soldier soldiers = 1;
+    repeated Villager villagers = 2;
+    repeated Factory factories = 3;
+    repeated int64 gold = 4;
+    repeated int64 instruction_counts = 5;
+    repeated PlayerError player_errors = 6;
+}
+
+message Game {
+
+    /**
+     * Maximum gold
+     */
+    int64 max_gold = 2;
+ 
+    /**
+     * Maximum HP of a soldier
+     */
+    int32 soldier_max_hp = 3;
+
+    /**
+     * Maximum HP of a villager
+     */
+    int32 villager_max_hp = 4;
+
+    /**
+     * Player turn is cancelled if this inst. limit is crossed
+     */
+    int64 inst_limit_turn = 5;
+
+    /**
+     * Player game is cancelled if this inst. limit is crossed
+     */
+    int64 inst_limit_game = 6;
+
+    /**
+     * Size of the map, in number of elements
+     */
+    int32 terrain_size = 7;
+
+    /**
+     * Size of one terrain element
+     */
+    int32 terrain_element_size = 8;
+
+    /**
+     * A list of states, representing the entire game
+     */
+    repeated GameState states = 9;
+
+    /**
+     * Mapping of error codes and error strings
+     */
+    map<int32, string> error_map = 10;
+
+    /**
+     * List of terrain of each element on map
+     */
+    repeated MapElement map_elements = 11;
+}
