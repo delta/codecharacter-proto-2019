@@ -6,8 +6,6 @@
 syntax = "proto3";
 package proto;
 
-// TODO: Add definitions
-
 enum SoldierState {
     IDLE = 0;
     MOVE = 1;
@@ -38,6 +36,7 @@ enum TerrainType {
     GOLD_MINE = 2;
 };
 
+// Delete soldier when hp becomes 0 or state is set to DEAD.
 message Soldier {
     int32 id = 1;
     int32 player_id = 2;
@@ -45,21 +44,20 @@ message Soldier {
     int32 x = 4;
     int32 y = 5;
     SoldierState state = 6;
-    int32 attack_target_x = 7;
-    int32 attack_target_y = 8;
+    int32 target_x = 7; //
+    int32 target_y = 8; // Set to -1 if no target set
 }
 
+// Delete villager when hp becomes 0 or state is set to DEAD.
 message Villager {
     int32 id = 1;
-    int32 player_id = 2; // Is this essential?
+    int32 player_id = 2;
     int32 hp = 3;
     int32 x = 4;
     int32 y = 5;
     VillagerState state = 6;
-    int32 attack_target_x = 7; //
-    int32 attack_target_y = 8; // Set to -1 if not attacking
-    int32 build_target_x = 9; //
-    int32 build_target_y = 10; // Set to -1 if not building
+    int32 target_x = 7; //
+    int32 target_y = 8; // Set to -1 if no target set
 }
 
 message Factory {
@@ -70,10 +68,6 @@ message Factory {
     int32 y = 5;
     FactoryState state = 6;
     int32 build_percent = 7;
-}
-
-message MapElement {
-    TerrainType type = 1;
 }
 
 message PlayerError {
@@ -90,54 +84,49 @@ message GameState {
 }
 
 message Game {
-
-    /**
-     * Maximum gold
-     */
-    int64 max_gold = 2;
  
     /**
      * Maximum HP of a soldier
      */
-    int32 soldier_max_hp = 3;
+    int32 soldier_max_hp = 1;
 
     /**
      * Maximum HP of a villager
      */
-    int32 villager_max_hp = 4;
+    int32 villager_max_hp = 2;
 
     /**
      * Player turn is cancelled if this inst. limit is crossed
      */
-    int64 inst_limit_turn = 5;
+    int64 inst_limit_turn = 3;
 
     /**
      * Player game is cancelled if this inst. limit is crossed
      */
-    int64 inst_limit_game = 6;
+    int64 inst_limit_game = 4;
 
     /**
      * Size of the map, in number of elements
      */
-    int32 terrain_size = 7;
+    int32 map_size = 5;
 
     /**
-     * Size of one terrain element
+     * Size of one map element
      */
-    int32 terrain_element_size = 8;
+    int32 map_element_size = 6;
 
     /**
      * A list of states, representing the entire game
      */
-    repeated GameState states = 9;
+    repeated GameState states = 7;
 
     /**
      * Mapping of error codes and error strings
      */
-    map<int32, string> error_map = 10;
+    map<int32, string> error_map = 8;
 
     /**
-     * List of terrain of each element on map
+     * List of terrain of each element on map which is of size map_size * map_size
      */
-    repeated MapElement map_elements = 11;
+    repeated TerrainType map_elements = 9;
 }
