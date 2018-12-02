@@ -7,27 +7,27 @@ syntax = "proto3";
 package proto;
 
 enum SoldierState {
-    IDLE = 0;
-    MOVE = 1;
-    ATTACK = 2;
-    DEAD = 3;
+    SOLDIER_IDLE = 0;
+    SOLDIER_MOVE = 1;
+    SOLDIER_ATTACK = 2;
+    SOLDIER_DEAD = 3;
 };
 
 enum VillagerState {
-    IDLE = 0;
-    MOVE = 1;
-    ATTACK = 2;
-    MINE = 3;
-    BUILD = 4;
-    DEAD = 5;
+    VILLAGER_IDLE = 0;
+    VILLAGER_MOVE = 1;
+    VILLAGER_ATTACK = 2;
+    VILLAGER_MINE = 3;
+    VILLAGER_BUILD = 4;
+    VILLAGER_DEAD = 5;
 };
 
 enum FactoryState {
-    UNBUILT = 0;
-    IDLE = 1;
-    VILLAGER_PRODUCTION = 2;
-    SOLDIER_PRODUCTION = 3;
-    DESTROYED = 4;
+    FACTORY_UNBUILT = 0;
+    FACTORY_IDLE = 1;
+    FACTORY_VILLAGER_PRODUCTION = 2;
+    FACTORY_SOLDIER_PRODUCTION = 3;
+    FACTORY_DESTROYED = 4;
 };
 
 enum TerrainType {
@@ -70,9 +70,7 @@ message Factory {
     int32 build_percent = 7;
 }
 
-message PlayerError {
-    repeated int32 errors = 1;
-}
+message PlayerError { repeated int32 errors = 1; }
 
 message GameState {
     repeated Soldier soldiers = 1;
@@ -84,7 +82,7 @@ message GameState {
 }
 
 message Game {
- 
+
     /**
      * Maximum HP of a soldier
      */
@@ -126,7 +124,8 @@ message Game {
     map<int32, string> error_map = 8;
 
     /**
-     * List of terrain of each element on map which is of size map_size * map_size
+     * List of terrain of each element on map which is of size map_size *
+     * map_size
      */
     repeated TerrainType map_elements = 9;
 }
