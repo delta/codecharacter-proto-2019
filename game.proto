@@ -96,37 +96,43 @@ message Game {
     int32 villager_max_hp = 2;
 
     /**
+     * Maximum HP of a factory
+     */
+    int64 factory_max_hp = 3;
+
+    /**
      * Player turn is cancelled if this inst. limit is crossed
      */
-    int64 inst_limit_turn = 3;
+    int64 inst_limit_turn = 4;
 
     /**
      * Player game is cancelled if this inst. limit is crossed
      */
-    int64 inst_limit_game = 4;
+    int64 inst_limit_game = 5;
 
     /**
      * Size of the map, in number of elements
      */
-    int32 map_size = 5;
+    int32 map_size = 6;
 
     /**
      * Size of one map element
      */
-    int32 map_element_size = 6;
+    int32 map_element_size = 7;
 
     /**
      * A list of states, representing the entire game
      */
-    repeated GameState states = 7;
+    repeated GameState states = 8;
 
     /**
      * Mapping of error codes and error strings
      */
-    map<int32, string> error_map = 8;
+    map<int32, string> error_map = 9;
 
     /**
-     * List of terrain of each element on map which is of size map_size * map_size
+     * List of terrain of each element on map which is of size map_size *
+     * map_size
      */
-    repeated TerrainType map_elements = 9;
+    repeated TerrainType map_elements = 10;
 }
