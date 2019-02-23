@@ -36,6 +36,12 @@ enum TerrainType {
     GOLD_MINE = 2;
 };
 
+enum Winner {
+    PLAYER1 = 0;
+    PLAYER2 = 1;
+    TIE = 2;
+};
+
 // Delete soldier when hp becomes 0 or state is set to DEAD.
 message Soldier {
     int32 id = 1;
@@ -134,4 +140,14 @@ message Game {
      * map_size
      */
     repeated TerrainType map_elements = 10;
+
+    /**
+     * Was this game ended by deathmatch?
+     */
+    bool was_deathmatch = 11;
+
+    /**
+     * Game winner
+     */
+    Winner winner = 12;
 }
