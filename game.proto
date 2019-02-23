@@ -79,6 +79,7 @@ message GameState {
     repeated int64 gold = 4;
     repeated int64 instruction_counts = 5;
     repeated PlayerError player_errors = 6;
+    repeated int64 scores = 7;
 }
 
 message Game {
